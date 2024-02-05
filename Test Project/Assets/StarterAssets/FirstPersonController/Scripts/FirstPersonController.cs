@@ -75,6 +75,11 @@ namespace StarterAssets
 
 		private const float _threshold = 0.01f;
 
+		[SerializedField]
+		private Vector3 checkPoint;
+
+		public TextMeshPro Score;
+		private int _score;
 		private bool IsCurrentDeviceMouse
 		{
 			get
@@ -101,6 +106,8 @@ namespace StarterAssets
 
 		private void Start()
 		{
+			Score.text = _score.ToString();
+
 			_controller = GetComponent<CharacterController>();
 			_input = GetComponent<StarterAssetsInputs>();
 #if ENABLE_INPUT_SYSTEM
@@ -119,6 +126,7 @@ namespace StarterAssets
 			JumpAndGravity();
 			GroundedCheck();
 			Move();
+			Score.text = _score.ToString();
 		}
 
 		private void LateUpdate()
@@ -134,6 +142,14 @@ namespace StarterAssets
 				Debug.Log("test");
 				Destroy(other.gameObject);
 			}	
+			if (other.gameObject.tag == "Death")
+            {
+				this.GetComponent<CharacterController>().enabled = false;
+				transform.position = checkPosition = checkPoint;
+				this.GetComponent<CharacterController>().enabled = true;
+
+				_score -= 1;
+			}
 		}
 	
 		private void GroundedCheck()
