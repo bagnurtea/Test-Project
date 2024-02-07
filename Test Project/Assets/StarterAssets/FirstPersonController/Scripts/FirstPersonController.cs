@@ -123,10 +123,7 @@ namespace StarterAssets
 
 		private void Update()
 		{
-			if (_canJump)
-			{
-				JumpAndGravity();
-			}
+			JumpAndGravity();
 			GroundedCheck();
 			Move();
 			Score.text = _score.ToString();

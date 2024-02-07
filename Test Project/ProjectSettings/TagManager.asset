@@ -5,8 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - CinemachineTarget
-  - PowerUp
   - Death
+  - PowerUp
   layers:
   - Default
   - TransparentFX
