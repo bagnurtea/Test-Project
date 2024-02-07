@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using TMPro;
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
 #endif
@@ -75,10 +76,9 @@ namespace StarterAssets
 
 		private const float _threshold = 0.01f;
 
-		[SerializedField]
+		[SerializeField]
 		private Vector3 checkPoint;
-
-		public TextMeshPro Score;
+		public TextMeshProUGUI Score;
 		private int _score;
 		private bool IsCurrentDeviceMouse
 		{
@@ -96,7 +96,7 @@ namespace StarterAssets
 		{
 
 			_canJump = false;
-
+			checkPoint = transform.position;
 			// get a reference to our main camera
 			if (_mainCamera == null)
 			{
@@ -123,7 +123,10 @@ namespace StarterAssets
 
 		private void Update()
 		{
-			JumpAndGravity();
+			if (_canJump)
+			{
+				JumpAndGravity();
+			}
 			GroundedCheck();
 			Move();
 			Score.text = _score.ToString();
@@ -134,18 +137,17 @@ namespace StarterAssets
 			CameraRotation();
 		}
 
-		private void onTriggerEnter(Collider other)
+		private void OnTriggerEnter(Collider other)
 		{
 			if (other.gameObject.tag == "PowerUp")
 			{ 
 				_canJump = true;
-				Debug.Log("test");
 				Destroy(other.gameObject);
 			}	
 			if (other.gameObject.tag == "Death")
             {
 				this.GetComponent<CharacterController>().enabled = false;
-				transform.position = checkPosition = checkPoint;
+				transform.position = checkPoint;
 				this.GetComponent<CharacterController>().enabled = true;
 
 				_score -= 1;
