@@ -149,6 +149,10 @@ namespace StarterAssets
 
 				_score -= 1;
 			}
+			if (other.gameObject.tag == "Checkpoint")
+            {
+				checkPoint = other.transform.position;
+            }
 		}
 	
 		private void GroundedCheck()
